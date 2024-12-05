@@ -1,6 +1,7 @@
 #pragma once
 #include "paddle.hpp"
 #include "ball.hpp"
+#include <string>
 
 class GameManager
 {
@@ -40,35 +41,44 @@ public:
 		SetTargetFPS(60);
 		while (!WindowShouldClose())
 		{
-			handleInput();
-
-			ball.changePos(scrHeight);
-
-			BeginDrawing();
-			ClearBackground(BLACK);
-			
-
-			leftPaddle.drawPaddle(col);
-			rightPaddle.drawPaddle(col);
-			
-			leftPaddle.movePaddle(scrHeight);
-			rightPaddle.movePaddle(scrHeight);
-
-			ball.drawBall(col);
-			
-			std::cout << ball.getIsInGame();
-			ball.checkCollision(leftPaddle, rightPaddle, scrWidth);
-
-
-			trackScore();
-
-			if (score.first >= 3 || score.second >= 3)
+			if (score.first < 3 && score.second < 3)
 			{
-				break;
+				drawScore();
+				handleInput();
+				BeginDrawing();
+				ClearBackground(BLACK);
+
+				leftPaddle.drawPaddle(col);
+				rightPaddle.drawPaddle(col);
+
+				leftPaddle.movePaddle(scrHeight);
+				rightPaddle.movePaddle(scrHeight);
+
+				ball.drawBall(col);
+				ball.changePos(scrHeight);
+				ball.checkCollision(leftPaddle, rightPaddle, scrWidth);
+
+				trackScore();
+
+				
+			}
+			else{
+				ClearBackground(BLACK);
+				drawScore();
+				DrawText(TextFormat("%s Game Over!"), scrWidth / 2 - MeasureText("%s Game Over!", 50), scrHeight / 9, 50, col);
+			
 			}
 			EndDrawing();
 		}
 		CloseWindow();
+	}
+
+	void drawScore()
+	{
+		DrawText(TextFormat(std::to_string(score.first).c_str()), scrWidth/2 - MeasureText("   ", 50) * 2, scrHeight / 10, 50, col);
+		DrawText(TextFormat(" - "), scrWidth / 2 - MeasureText("   ", 50), scrHeight / 10, 50, col);
+		DrawText(TextFormat(std::to_string(score.first).c_str()), scrWidth/2 + MeasureText("   ", 50) * 2, scrHeight / 10, 50, col);
+	
 	}
 
 	//void gameLoop()
@@ -89,7 +99,7 @@ public:
 			{
 				score.second += 1;
 			}
-			else
+			else if(ball.getVelocityX() > 0)
 			{
 				score.first += 1;
 			}
