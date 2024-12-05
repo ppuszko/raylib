@@ -27,19 +27,16 @@ public:
 		isInGame = true;
 	}
 
-	void changePos(int screenHeight, int screenWidth)
+	void changePos(int screenHeight)
 	{
 		position.y += velocity.y;
 		position.x += velocity.x;
 
-		if ((position.y <= radius/2) || position.y >= screenWidth - radius/2)
+		if ((position.y <= radius/2) || position.y >= screenHeight - radius/2)
 		{
 			velocity.y *= -1;
 		}
-		if ((position.x <= radius/2) || (position.x >= screenWidth - radius/2))
-		{
-			isInGame = false;
-		}
+	
 		printPosition();
 	}
 
@@ -50,9 +47,13 @@ public:
 		int paddleHeight = rightPaddle.getHeight();
 
 		//right paddle collision check
-		if ((position.x - radius / 2 >= paddlePosX) && (position.y >= paddlePosY && position.y <= paddlePosY + paddleHeight))
+		if ((position.x + radius / 2 >= paddlePosX) && (position.y >= paddlePosY && position.y <= paddlePosY + paddleHeight))
 		{
 			velocity.x *= -1;
+		}
+		else if ((position.x + radius / 2 >= paddlePosX) && ((position.y <= paddlePosY || position.y >= paddlePosY + paddleHeight)))
+		{
+			isInGame = false;
 		}
 
 		paddlePosY = leftPaddle.getPos(screenWidth).second;
@@ -63,6 +64,10 @@ public:
 		if ((position.x - radius / 2 <= paddlePosX) && (position.y >= paddlePosY && position.y <= paddlePosY + paddleHeight))
 		{
 			velocity.x *= -1;
+		}
+		else if ((position.x - radius / 2 <= paddlePosX) && ((position.y < paddlePosY || position.y > paddlePosY + paddleHeight)))
+		{
+			isInGame = false;
 		}
 
 	}
@@ -85,6 +90,7 @@ public:
 	{
 		position.x = screenWidth / 2;
 		position.y = screenHeight / 2;
+		isInGame = true;
 	}
 
 	void printPosition()

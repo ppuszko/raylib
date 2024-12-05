@@ -10,11 +10,11 @@ int main()
 
 	GameManager gameMan(7, 10, 100, 4, 4, 10.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 50);
 
-    std::cout<< gameMan.ball.getVelocityX();
+    
 
-	SetTargetFPS(60);
+	
 	gameMan.initWindow();
-	gameMan.gameLoop();
+	gameMan.initializeGame();
 
 
 	//const std::string name{ "Pong" };
@@ -71,6 +71,6 @@ int main()
 	//}
 
 	//CloseWindow();
-	//std::cout << "game over! \n";
+	//std::cout << "game over! \n;"
 }
 

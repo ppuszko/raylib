@@ -37,11 +37,16 @@ public:
 
 	void initializeGame()
 	{
-		while (true)
+		SetTargetFPS(60);
+		while (!WindowShouldClose())
 		{
 			handleInput();
+
+			ball.changePos(scrHeight);
+
 			BeginDrawing();
 			ClearBackground(BLACK);
+			
 
 			leftPaddle.drawPaddle(col);
 			rightPaddle.drawPaddle(col);
@@ -50,7 +55,8 @@ public:
 			rightPaddle.movePaddle(scrHeight);
 
 			ball.drawBall(col);
-			ball.changePos(scrHeight, scrWidth);
+			
+			std::cout << ball.getIsInGame();
 			ball.checkCollision(leftPaddle, rightPaddle, scrWidth);
 
 
@@ -60,18 +66,20 @@ public:
 			{
 				break;
 			}
-		}
-	}
-
-	void gameLoop()
-	{
-		while (!WindowShouldClose())
-		{
-			initializeGame();
 			EndDrawing();
 		}
-	
+		CloseWindow();
 	}
+
+	//void gameLoop()
+	//{
+	//	while (!WindowShouldClose())
+	//	{
+	//		initializeGame();
+	//		
+	//	}
+	//
+	//}
 
 	void trackScore()
 	{
@@ -89,11 +97,11 @@ public:
 		}
 	}
 
-	Ball ball;
+	
 private:
 	Paddle leftPaddle;
 	Paddle rightPaddle;
-	
+	Ball ball;
 	std::pair<int, int> score;
 	Color col;
 	int scrWidth;
