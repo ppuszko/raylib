@@ -16,7 +16,8 @@ public:
 		leftPaddle(paddleVelocity, (screenHeight / 2) - paddleHeight / 2, paddleOffset, paddleWidth, paddleHeight),
 		rightPaddle(paddleVelocity, (screenHeight / 2) - paddleHeight / 2, screenWidth - paddleOffset - paddleWidth, paddleWidth, paddleHeight),
 		ball(screenWidth / 2, screenHeight / 2, ballVelX, ballVelY, ballRadius),
-		score(0, 0), col(color), scrWidth(screenWidth), scrHeight(screenHeight)  { }
+		score(0, 0), col(color), scrWidth(screenWidth), scrHeight(screenHeight)  
+	{ }
 
 	void initWindow()
 	{
@@ -33,8 +34,6 @@ public:
 		else if (IsKeyDown(KEY_DOWN) && rightPaddle.getPos(scrHeight).second < scrHeight - rightPaddle.getHeight()) rightPaddle.setDirection(1);
 		else rightPaddle.setDirection(0);
 	}
-
-
 
 	void initializeGame()
 	{
@@ -81,16 +80,6 @@ public:
 	
 	}
 
-	//void gameLoop()
-	//{
-	//	while (!WindowShouldClose())
-	//	{
-	//		initializeGame();
-	//		
-	//	}
-	//
-	//}
-
 	void trackScore()
 	{
 		if (ball.getIsInGame() == false)
@@ -107,7 +96,6 @@ public:
 		}
 	}
 
-	
 private:
 	Paddle leftPaddle;
 	Paddle rightPaddle;

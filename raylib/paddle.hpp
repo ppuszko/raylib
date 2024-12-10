@@ -31,7 +31,6 @@ public:
 		paddle->y = posY;
 	}
 
-
 	void movePaddle(const int screenHeight)
 	{
 		if ((posY < screenHeight - paddle->height) || posY>0)
